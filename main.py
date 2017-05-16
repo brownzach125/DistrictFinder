@@ -3,6 +3,7 @@ from SunlightCongress import SunlightCongress
 import pprint
 import csv
 import sys
+import Chapter
 
 
 def from_address_to_district(location):
@@ -13,7 +14,7 @@ def from_address_to_district(location):
 
 # filename = sys.argv[1]
 filename = "test.csv"
-# print filename
+
 entries = []
 
 with open(filename, 'rU') as csvfile:
@@ -21,11 +22,18 @@ with open(filename, 'rU') as csvfile:
     for row in reader:
         entries.append(row)
 
-districts = [from_address_to_district(x['Address']) for x in entries]
+for item in entries:
+    item.update(from_address_to_district(item['Address']))
 
-print [x['district'] for x in districts]
+distance = 2 ^ 5
+# for item in entries:
+#   for chapter in PM_chapters:
+#       if item['district']=chapter.district
+#
+#
+fieldnames = entries[0].keys()
 
-# with open(filename,'wb') as f:
-#     w = csv.writer(f)
-#     w.writerow(header_names)
-#     w.writerow(sums_list)
+with open(filename, 'wb') as f:
+    w = csv.DictWriter(f)
+    w.writeheader()
+    w.writerows(entries)
