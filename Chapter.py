@@ -10,13 +10,14 @@ class Chapter:
         self.lng = float(lng)
         self.stat = stat
 
+    # TODO  add population field that knows the number of people added by single execution of program
     @classmethod
     def from_kml_data(cls, info):
         name = info["name"]
         state, district = tuple(info["district"].split('-'))
         lat, lng, _ = tuple(map(float,info["point"].strip().split(',')))
         stat = None
-        # TODO I don't know what status is
+        # TODO determine status by pin color
 
         obj = cls(name, state, district, lat, lng, stat)
         return obj
