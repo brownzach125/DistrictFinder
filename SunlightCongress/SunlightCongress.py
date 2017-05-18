@@ -1,7 +1,5 @@
 import requests
 
-data = requests.get("https://congress.api.sunlightfoundation.com/legislators")
-
 sunlight_congress_domain = "https://congress.api.sunlightfoundation.com/legislators"
 
 
