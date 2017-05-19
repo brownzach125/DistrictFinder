@@ -56,13 +56,16 @@ closest_chapter = 'Blank'
 for item in entries:
     distance = 2 ^ 5
     for chapter in PM_Chapters:
-        if item['district'] == chapter.district:
+        if item['district'] == chapter.district and (chapter.stat == 'Active' or chapter.stat == 'In Progress'):
             distance_new = ((chapter.lat - item['Latitude']) ** 2 + (chapter.lng - item['Longitude']) ** 2) ** .5
             if distance_new < distance:
                 distance = distance_new
                 item['chapter'] = chapter.name
-#  TODO Differentiate between active and nonactive chapters
-
+        if item['district'] == chapter.district and chapter.stat == 'Targeted':
+            distance_new = ((chapter.lat - item['Latitude']) ** 2 + (chapter.lng - item['Longitude']) ** 2) ** .5
+            if distance_new < distance:
+                distance = distance_new
+                item['target chapter'] = chapter.name
 print entries
 # fieldnames = entries[0].keys()
 
