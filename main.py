@@ -27,17 +27,21 @@ with open(filename, 'rU') as csvfile:
 
 def from_address_to_district(location):
     """Takes a location (street address, zip code, city) and returns the latitude, longitude, and district as a dict"""
-    g = geocoder.google(location)
+    g = geocoder.arcgis(location)
     coords = g.latlng
-    dict1 = {'Latitude': coords[0], 'Longitude': coords[1]}
-    dict2 = SunlightCongress.get_district(*coords)
+    dict1 = {'Latitude': g.lat, 'Longitude': g.lng}
+    try:
+        dict2 = SunlightCongress.get_district(*coords)
+    except:
+        print "No location"
+
     dict1.update(dict2)
     return dict1
 
 
 # Filename of personnel data, expects more than one entry, should include headers
 # filename = sys.argv[1]
-filename = "test.csv"
+filename = "CCL Contacts.csv"
 
 entries = []  # holder for personnel dictionaries
 
@@ -60,16 +64,18 @@ for item in entries:
             distance_new = ((chapter.lat - item['Latitude']) ** 2 + (chapter.lng - item['Longitude']) ** 2) ** .5
             if distance_new < distance:
                 distance = distance_new
-                item['chapter'] = chapter.name
+                item['Chapter'] = chapter.name
         if item['district'] == chapter.district and chapter.stat == 'Targeted':
             distance_new = ((chapter.lat - item['Latitude']) ** 2 + (chapter.lng - item['Longitude']) ** 2) ** .5
             if distance_new < distance:
                 distance = distance_new
                 item['target chapter'] = chapter.name
 print entries
-# fieldnames = entries[0].keys()
+fieldnames = ['First Name', 'Last Name', 'Email', 'Phone Number', 'Chapter', 'state', 'district', 'Address',
+              'target chapter', 'Longitude', 'Latitude', 'Emailed?', 'Called?']
 
-# with open(filename, 'wb') as f:
-#    w = csv.DictWriter(f)
-#    w.writeheader()
-#    w.writerows(entries)
+filename = "test.csv"
+with open(filename, 'wb') as f:
+    w = csv.DictWriter(f, fieldnames)
+    w.writeheader()
+    w.writerows(entries)
