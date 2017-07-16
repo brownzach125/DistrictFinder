@@ -3,6 +3,7 @@ from SunlightCongress import SunlightCongress
 import pprint
 import csv
 import sys
+from Maps import PinExtractor
 from Chapter import Chapter
 
 filename = "Petro_Metro_Chapters.csv"  # Local file on AS computer, not live
@@ -13,12 +14,15 @@ filename = "Petro_Metro_Chapters.csv"  # Local file on AS computer, not live
 
 PM_Chapters = []
 
-# read chapter information from PetroMetro csv
-with open(filename, 'rU') as csvfile:
-    reader = csv.reader(csvfile, delimiter=',')
-    for row in reader:
-        PM_Chapters.append(Chapter(*row))
+# read chapter information from live CCL global map
 
+PM_Chapters = PinExtractor.get_chapter_info()
+
+# read chapter information from PetroMetro csv
+# with open(filename, 'rU') as csvfile:
+#     reader = csv.reader(csvfile, delimiter=',')
+#     for row in reader:
+#         PM_Chapters.append(Chapter(*row))
 
 # creates a new chapter object for each row in csv, stores in PM_Chapters
 
@@ -33,7 +37,7 @@ def from_address_to_district(location):
     try:
         dict2 = SunlightCongress.get_district(*coords)
     except:
-        print "No location"
+        dict2 = {u'state': u"N/A", u'district': u"N/A"}
 
     dict1.update(dict2)
     return dict1
@@ -41,7 +45,7 @@ def from_address_to_district(location):
 
 # Filename of personnel data, expects more than one entry, should include headers
 # filename = sys.argv[1]
-filename = "CCL Contacts.csv"
+filename = "Raw.csv"
 
 entries = []  # holder for personnel dictionaries
 
@@ -59,13 +63,15 @@ for item in entries:
 closest_chapter = 'Blank'
 for item in entries:
     distance = 2 ^ 5
+    if item['district'] == "N/A" or item['state'] == "N/A":
+        continue
     for chapter in PM_Chapters:
-        if item['district'] == chapter.district and (chapter.stat == 'Active' or chapter.stat == 'In Progress'):
+        if (chapter.stat == 'Active' or chapter.stat == 'In Progress'):
             distance_new = ((chapter.lat - item['Latitude']) ** 2 + (chapter.lng - item['Longitude']) ** 2) ** .5
             if distance_new < distance:
                 distance = distance_new
                 item['Chapter'] = chapter.name
-        if item['district'] == chapter.district and chapter.stat == 'Targeted':
+        if chapter.stat == 'Targeted':
             distance_new = ((chapter.lat - item['Latitude']) ** 2 + (chapter.lng - item['Longitude']) ** 2) ** .5
             if distance_new < distance:
                 distance = distance_new
@@ -74,7 +80,7 @@ print entries
 fieldnames = ['First Name', 'Last Name', 'Email', 'Phone Number', 'Chapter', 'state', 'district', 'Address',
               'target chapter', 'Longitude', 'Latitude', 'Emailed?', 'Called?']
 
-filename = "test.csv"
+filename = "Processed.csv"
 with open(filename, 'wb') as f:
     w = csv.DictWriter(f, fieldnames)
     w.writeheader()
