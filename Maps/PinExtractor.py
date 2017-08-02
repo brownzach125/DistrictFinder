@@ -23,7 +23,10 @@ def get_chapter_info():
         for style in root.Document.Style:
             id = style.attrib['id']
             png = style.IconStyle.Icon.href.text
-            colors[id] = png
+            if png == 'http://www.gstatic.com/mapspro/images/stock/22-blue-dot.png':
+                colors[id] = "Active"
+            if png == 'http://www.gstatic.com/mapspro/images/stock/157-yellow-dot.png':
+                colors[id] = "In Progress"
 
 
 
@@ -32,8 +35,9 @@ def get_chapter_info():
                 if pm.name != folder.name:
                     if hasattr(pm, 'Point'):
                         chapters.append( {
-                            "name": pm.name.text,
-                            "point": pm.Point.coordinates.text,
+                            "name": pm.name.text[:-12],
+                            "lat": pm.Point.coordinates.text,
+                            # TODO FORMAT STRING COORDINATES INTO TWO NUMBERS
                             #"district": folder.name.text,
                             "status": colors[pm.styleUrl.text.replace("#", "") + "-normal"]
                         }

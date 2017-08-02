@@ -6,7 +6,7 @@ import sys
 from Maps import PinExtractor
 from Chapter import Chapter
 
-filename = "Petro_Metro_Chapters.csv"  # Local file on AS computer, not live
+# filename = "Petro_Metro_Chapters.csv"  # Local file on AS computer, not live
 # cvs expected to have name, state, district, lat, lng, status of district in that order
 
 #  Estalbish container for lists of chapters
@@ -27,7 +27,6 @@ PM_Chapters = PinExtractor.get_chapter_info()
 # creates a new chapter object for each row in csv, stores in PM_Chapters
 
 
-# print PM_Chapters
 
 def from_address_to_district(location):
     """Takes a location (street address, zip code, city) and returns the latitude, longitude, and district as a dict"""
@@ -45,7 +44,7 @@ def from_address_to_district(location):
 
 # Filename of personnel data, expects more than one entry, should include headers
 # filename = sys.argv[1]
-filename = "Raw.csv"
+filename = "New Members - TX Houston-West.csv"
 
 entries = []  # holder for personnel dictionaries
 
@@ -66,7 +65,7 @@ for item in entries:
     if item['district'] == "N/A" or item['state'] == "N/A":
         continue
     for chapter in PM_Chapters:
-        if (chapter.stat == 'Active' or chapter.stat == 'In Progress'):
+        if (chapter['status'] == 'Active' or chapter['status'] == 'In Progress'):
             distance_new = ((chapter.lat - item['Latitude']) ** 2 + (chapter.lng - item['Longitude']) ** 2) ** .5
             if distance_new < distance:
                 distance = distance_new
@@ -77,11 +76,11 @@ for item in entries:
                 distance = distance_new
                 item['target chapter'] = chapter.name
 print entries
-fieldnames = ['First Name', 'Last Name', 'Email', 'Phone Number', 'Chapter', 'state', 'district', 'Address',
-              'target chapter', 'Longitude', 'Latitude', 'Emailed?', 'Called?']
-
-filename = "Processed.csv"
-with open(filename, 'wb') as f:
-    w = csv.DictWriter(f, fieldnames)
-    w.writeheader()
-    w.writerows(entries)
+# fieldnames = ['First Name', 'Last Name', 'Email', 'Phone Number', 'Chapter', 'state', 'district', 'Address',
+#               'target chapter', 'Longitude', 'Latitude', 'Emailed?', 'Called?']
+#
+# filename = "Processed.csv"
+# with open(filename, 'wb') as f:
+#     w = csv.DictWriter(f, fieldnames)
+#     w.writeheader()
+#     w.writerows(entries)
