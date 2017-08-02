@@ -34,9 +34,10 @@ def get_chapter_info():
             for pm in folder.Placemark:
                 if pm.name != folder.name:
                     if hasattr(pm, 'Point'):
+                        x, y, z = map(float, pm.Point.coordinates.text.strip().split(","))
                         chapters.append( {
                             "name": pm.name.text[:-12],
-                            "lat": pm.Point.coordinates.text,
+                            "lat":
                             # TODO FORMAT STRING COORDINATES INTO TWO NUMBERS
                             #"district": folder.name.text,
                             "status": colors[pm.styleUrl.text.replace("#", "") + "-normal"]

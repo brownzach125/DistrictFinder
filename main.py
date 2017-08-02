@@ -76,6 +76,8 @@ for item in entries:
                 distance = distance_new
                 item['target chapter'] = chapter.name
 print entries
+
+
 # fieldnames = ['First Name', 'Last Name', 'Email', 'Phone Number', 'Chapter', 'state', 'district', 'Address',
 #               'target chapter', 'Longitude', 'Latitude', 'Emailed?', 'Called?']
 #
