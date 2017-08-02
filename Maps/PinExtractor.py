@@ -39,7 +39,6 @@ def get_chapter_info():
                             "name": pm.name.text[:-12],
                             "lat": x,
                             "lng":y,
-                            # TODO FORMAT STRING COORDINATES INTO TWO NUMBERS
                             #"district": folder.name.text,
                             "status": colors[pm.styleUrl.text.replace("#", "") + "-normal"]
                         }

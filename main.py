@@ -61,25 +61,22 @@ for item in entries:
 # determines closest chapter to the address given in each entry, adds this to dict under key 'chapter
 closest_chapter = 'Blank'
 for item in entries:
-    distance = 2 ^ 5
+    distance = sys.maxint
     if item['district'] == "N/A" or item['state'] == "N/A":
         continue
     for chapter in PM_Chapters:
-        if (chapter['status'] == 'Active' or chapter['status'] == 'In Progress'):
-            distance_new = ((chapter.lat - item['Latitude']) ** 2 + (chapter.lng - item['Longitude']) ** 2) ** .5
+        if (chapter['status'] == "Active" or chapter['status'] == "In Progress"):
+            distance_new = ((chapter['lat'] - item['Latitude']) ** 2 + (chapter['lng'] - item['Longitude']) ** 2) ** .5
             if distance_new < distance:
                 distance = distance_new
-                item['Chapter'] = chapter.name
-        if chapter.stat == 'Targeted':
-            distance_new = ((chapter.lat - item['Latitude']) ** 2 + (chapter.lng - item['Longitude']) ** 2) ** .5
-            if distance_new < distance:
-                distance = distance_new
-                item['target chapter'] = chapter.name
+                item['Chapter'] = chapter['name']
+        # if chapter['status'] == 'Targeted':
+        #     distance_new = ((chapter['lat'] - item['Latitude']) ** 2 + (['lng'] - item['Longitude']) ** 2) ** .5
+        #     if distance_new < distance:
+        #         distance = distance_new
+        #         item['target chapter'] = chapter['name']
 print entries
 
-
-# fieldnames = ['First Name', 'Last Name', 'Email', 'Phone Number', 'Chapter', 'state', 'district', 'Address',
-#               'target chapter', 'Longitude', 'Latitude', 'Emailed?', 'Called?']
 #
 # filename = "Processed.csv"
 # with open(filename, 'wb') as f:
