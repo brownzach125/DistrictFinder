@@ -37,7 +37,8 @@ def get_chapter_info():
                         x, y, z = map(float, pm.Point.coordinates.text.strip().split(","))
                         chapters.append( {
                             "name": pm.name.text[:-12],
-                            "lat":
+                            "lat": x,
+                            "lng":y,
                             # TODO FORMAT STRING COORDINATES INTO TWO NUMBERS
                             #"district": folder.name.text,
                             "status": colors[pm.styleUrl.text.replace("#", "") + "-normal"]
