@@ -1,0 +1,11 @@
+From: $sender_name <$sender_email>
+To: $to_name <$to_email>
+Subject: $subject
+
+Dear $to_name
+This is the version from the file.
+I hope Alex has remembered to change this string to whatever it's supposed to be.
+In fact It'd be even better if she changed this to a txt file she loaded in.
+
+With the best wishes
+$sender_name

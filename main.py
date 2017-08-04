@@ -4,9 +4,14 @@ import os
 import sys
 import utils
 
+from Email.Email import send_email, create_message
 from Maps import PinExtractor
 from SunlightCongress import SunlightCongress
 
+
+sender_name = "Zach Brown"
+sender_email = "brownzach125@gmail.com"
+message_subject = "A very important message"
 
 def from_address_to_district(location):
     """Takes a location (street address, zip code, city) and returns the latitude, longitude, and district as a dict"""
@@ -20,6 +25,50 @@ def from_address_to_district(location):
 
     dict1.update(dict2)
     return dict1
+
+
+def send_emails(entries):
+    possible_emails = []
+    for entry in entries:
+        if entry['Email Opt Out'] != "No":
+            print "Some one doesn't want an email"
+            continue
+
+        first_name = entry['First Name']
+        last_name = entry['Last Name']
+        email = entry['Email']
+
+        # TODO You should add logic here  to decide which template to use
+        # You can pass any key into the create_message function, as long as that key
+        # is an entry in the template.
+        message = create_message(template_folder=os.path.join("Email", "templates", "generic.txt"),
+                                 sender_email=sender_email,
+                                 sender_name=sender_name,
+                                 to_name=first_name + " " + last_name,
+                                 to_email=email,
+                                 subject=message_subject)
+
+        possible_emails.append({
+            'sender_email': sender_email,
+            'email': email,
+            'message': message
+        })
+
+    for email in possible_emails:
+        print "This is an email that will be sent"
+        print "----------------------------------"
+        print email['message']
+
+        # TODO I'm pretty lazy about this you might make it better
+        value = ""
+        while(value != "Y" and value != "N"):
+            value = raw_input("Enter Y/N:")
+        if value == "Y":
+            send_email(sender_email, email, message)
+            print "Email sent!"
+
+        print "----------------------------------"
+        print
 
 
 def main():
@@ -45,16 +94,13 @@ def main():
 
     #  Establish container for lists of chapters
     PM_Chapters = PinExtractor.get_chapter_info()
-
+    active_chapters = filter(lambda chapter: chapter['status'] == "Active" or chapter['status'] == "In Progress",
+                             PM_Chapters)
     # adds lat, lng, state and district to each dictionary in entries
     for item in entries:
         item.update(from_address_to_district(item['Address']))
 
     # determines closest chapter to the address given in each entry, adds this to dict under key 'chapter
-    closest_chapter = 'Blank'
-
-    active_chapters = filter(lambda chapter: chapter['status'] == "Active" or chapter['status'] == "In Progress",
-                             PM_Chapters)
     for item in entries:
         distance = sys.maxint
         if item['district'] == "N/A" or item['state'] == "N/A":
@@ -66,12 +112,15 @@ def main():
                 distance = distance_new
                 item['Chapter'] = chapter['name']
 
+    send_emails(entries)
     # if chapter['status'] == 'Targeted':
     #     distance_new = ((chapter['lat'] - item['Latitude']) ** 2 + (['lng'] - item['Longitude']) ** 2) ** .5
     #     if distance_new < distance:
     #         distance = distance_new
     #         item['target chapter'] = chapter['name']
-    print entries
+
+
+
 
     # filename = "Processed.csv"
     # with open(filename, 'wb') as f:
