@@ -48,7 +48,11 @@ def send_emails(entries):
         count = count+1
         location = "Coco's at Gray and Baldwin in Midtown"
 
-        invite1 = "speak with you, either on the phone or in person, to talk more about CCL and your interests.  Would you be available to talk over coffee or tea, at " + location + " on " + exactdaytime[1] + " at " + exactdaytime[2] + "? Please feel free to suggest a different location or time, I’m always interested in trying new local places and I’m happy to accommodate your schedule.  Let me know what would be convenient for you."
+        invite1 = "speak with you, either on the phone or in person, to talk more about CCL and your interests." \
+                  "Would you be available to talk over coffee or tea, at " + location + " on " + exactdaytime[1] + " at " + exactdaytime[2] +\
+                  "? Please feel free to suggest a different location or time, " \
+                  "I'm always interested in trying new local places and " \
+                  "I'm happy to accommodate your schedule. Let me know what would be convenient for you."
         invite2 = "to speak with you to talk more about CCL and your interests. Would you be available to talk T Monday at 7? Please feel free to suggest a different time; I'm happy to accommodate your schedule."
         invite3 = "answer any questions you may have about CCL or our local activities."
 
@@ -65,7 +69,7 @@ def send_emails(entries):
                                  to_name=first_name + " " + last_name,
                                  to_email=email,
                                  subject=message_subject,
-                                 invite = inviteme)
+                                 invite=inviteme)
 
         possible_emails.append({
             'to_name': first_name, # TODO change to to_email
@@ -133,20 +137,6 @@ def main():
                 item['Chapter'] = chapter['name']
 
     send_emails(entries)
-    # if chapter['status'] == 'Targeted':
-    #     distance_new = ((chapter['lat'] - item['Latitude']) ** 2 + (['lng'] - item['Longitude']) ** 2) ** .5
-    #     if distance_new < distance:
-    #         distance = distance_new
-    #         item['target chapter'] = chapter['name']
-
-
-
-
-    # filename = "Processed.csv"
-    # with open(filename, 'wb') as f:
-    #     w = csv.DictWriter(f, fieldnames)
-    #     w.writeheader()
-    #     w.writerows(entries)
 
 if __name__ == "__main__":
     main()
