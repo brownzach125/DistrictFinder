@@ -1,19 +1,20 @@
 From: $sender_name <$sender_email>
 To: $to_name <$to_email>
+CC: <$GL_email>
 Subject: $subject
 
-Dear $to_name
+Dear $salutation,
 
-Thank you for your interest in Citizens’ Climate Lobby! I’m always excited to meet new people passionate about making a difference and pursuing non-partisan climate change solutions!
+Thank you for your interest in Citizens' Climate Lobby! I'm always excited to meet new people passionate about making a difference and pursuing non-partisan climate change solutions!
 
-I’m the Membership Coordinator for the Houston Metro Area. I will serve as your initial point of contact; I can answer any questions you may have about CCL, our ongoing work, or ways you can help.
+I'm the Membership Coordinator for the Houston Metro Area. I will serve as your initial point of contact; I can answer any questions you may have about CCL, our ongoing work, or ways you can help.
 
 I would be happy to speak with you about CCL and any questions you may have. Please let me know if there is anything I can help you with as you learn more about CCL.
 
 In the meantime, here are some links to help you get plugged into CCL or just answer some preliminary questions you have:
 
-For a great overview of CCL and an interactive Q&A, join us for a Wednesday Night Intro Call (https://citizensclimatelobby.org/join-weekly-intro-call/)
-.
+For a great overview of CCL and an interactive Q&A, join us for a Wednesday Night Intro Call (https://citizensclimatelobby.org/join-weekly-intro-call/).
+
 To get connected to CCL, my recommendation is our CCL Community (https://community.citizensclimatelobby.org/). It has everything you could want; from more information and trainings, to forums and groups!
 
 To really arm yourself with knowledge, you should check out the Climate Advocate (https://citizensclimatelobby.org/new-member/#climateadvocatetraining).

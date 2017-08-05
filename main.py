@@ -42,20 +42,24 @@ def send_emails(entries):
         first_name = entry['First Name']
         last_name = entry['Last Name']
         email = entry['Email']
+        GL_contact = entry['GL email']
 
         exactdaytime = daytime[count%12]
 
         count = count+1
         location = "Coco's at Gray and Baldwin in Midtown"
 
-
+        if 'Chapter' not in entry:
+                continue
         if entry['Chapter'] == "TX Katy-South":
             message = create_message(template_folder=os.path.join("Email", "templates", "questions_only.txt"),
                                      sender_email=sender_email,
                                      sender_name=sender_name,
                                      to_name=first_name + " " + last_name,
                                      to_email=email,
-                                     subject=message_subject)
+                                     subject=message_subject,
+                                     salutation = first_name,
+                                     GL_email = GL_contact)
         elif entry['Chapter'] in ["TX Houston-Montrose-Rice University", "TX Houston-Heights", "TX Houston-West University"]:
             message = create_message(template_folder=os.path.join("Email", "templates", "close_enough_for_coffee.txt"),
                                      sender_email=sender_email,
@@ -65,19 +69,24 @@ def send_emails(entries):
                                      subject=message_subject,
                                      location=location,
                                      day=exactdaytime[0],
-                                     time=exactdaytime[1])
+                                     time=exactdaytime[1],
+                                     salutation = first_name,
+                                     GL_email=GL_contact)
         else:
-             message = create_message(template_folder=os.path.join("Email", "templates", "close_enough_for_coffee.txt"),
+             message = create_message(template_folder=os.path.join("Email", "templates", "phone_call.txt"),
                                      sender_email=sender_email,
                                      sender_name=sender_name,
                                      to_name=first_name + " " + last_name,
                                      to_email=email,
                                      subject=message_subject,
                                      day=exactdaytime[0],
-                                     time=exactdaytime[1])
+                                     time=exactdaytime[1],
+                                     salutation = first_name,
+                                     GL_email=GL_contact)
+
 
         possible_emails.append({
-            'to_name': first_name, # TODO change to to_email
+            'to_name': first_name,
             'email': email,
             'message': message,
             'chapter': entry['Chapter']
@@ -93,7 +102,7 @@ def send_emails(entries):
         while(value != "Y" and value != "N"):
             value = raw_input("Enter Y/N:")
         if value == "Y":
-            #send_email(sender_email, email, message)
+            #send_email(sender_email, email, GL_contact, message)
             print "Email sent!"
 
         print "----------------------------------"

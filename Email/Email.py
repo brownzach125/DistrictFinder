@@ -11,7 +11,7 @@ def create_message(template_folder, **kwargs):
     return message
 
 
-def send_email(sender_email, to_email, message):
+def send_email(sender_email, to_email,GL_email, message):
     try:
       server = smtplib.SMTP(host='smtp.gmail.com', port=587)
       server.ehlo()
@@ -24,7 +24,7 @@ def send_email(sender_email, to_email, message):
          return False
 
       server.login(sender_email, key)
-      server.sendmail(sender_email, [to_email], message)
+      server.sendmail(sender_email, [to_email, GL_email], message)
       server.close()
       return True
     except smtplib.SMTPException as err:
