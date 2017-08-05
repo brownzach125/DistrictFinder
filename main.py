@@ -50,19 +50,31 @@ def send_emails(entries):
 
 
         if entry['Chapter'] == "TX Katy-South":
-            inviteme =invite3
-        elif entry['Chapter'] == "TX Houston-Montrose-Rice University" or "TX Houston-Heights" or "TX Houston-West University":
-            inviteme = invite1
+            message = create_message(template_folder=os.path.join("Email", "templates", "questions_only.txt"),
+                                     sender_email=sender_email,
+                                     sender_name=sender_name,
+                                     to_name=first_name + " " + last_name,
+                                     to_email=email,
+                                     subject=message_subject)
+        elif entry['Chapter'] in ["TX Houston-Montrose-Rice University", "TX Houston-Heights", "TX Houston-West University"]:
+            message = create_message(template_folder=os.path.join("Email", "templates", "close_enough_for_coffee.txt"),
+                                     sender_email=sender_email,
+                                     sender_name=sender_name,
+                                     to_name=first_name + " " + last_name,
+                                     to_email=email,
+                                     subject=message_subject,
+                                     location=location,
+                                     day=exactdaytime[0],
+                                     time=exactdaytime[1])
         else:
-            inviteme = invite2
-
-        message = create_message(template_folder=os.path.join("Email", "templates", "generic.txt"),
-                                 sender_email=sender_email,
-                                 sender_name=sender_name,
-                                 to_name=first_name + " " + last_name,
-                                 to_email=email,
-                                 subject=message_subject,
-                                 invite=inviteme)
+             message = create_message(template_folder=os.path.join("Email", "templates", "close_enough_for_coffee.txt"),
+                                     sender_email=sender_email,
+                                     sender_name=sender_name,
+                                     to_name=first_name + " " + last_name,
+                                     to_email=email,
+                                     subject=message_subject,
+                                     day=exactdaytime[0],
+                                     time=exactdaytime[1])
 
         possible_emails.append({
             'to_name': first_name, # TODO change to to_email
@@ -81,7 +93,7 @@ def send_emails(entries):
         while(value != "Y" and value != "N"):
             value = raw_input("Enter Y/N:")
         if value == "Y":
-            send_email(sender_email, email, message)
+            #send_email(sender_email, email, message)
             print "Email sent!"
 
         print "----------------------------------"
