@@ -48,13 +48,6 @@ def send_emails(entries):
         count = count+1
         location = "Coco's at Gray and Baldwin in Midtown"
 
-        invite1 = "speak with you, either on the phone or in person, to talk more about CCL and your interests." \
-                  "Would you be available to talk over coffee or tea, at " + location + " on " + exactdaytime[1] + " at " + exactdaytime[2] +\
-                  "? Please feel free to suggest a different location or time, " \
-                  "I'm always interested in trying new local places and " \
-                  "I'm happy to accommodate your schedule. Let me know what would be convenient for you."
-        invite2 = "to speak with you to talk more about CCL and your interests. Would you be available to talk T Monday at 7? Please feel free to suggest a different time; I'm happy to accommodate your schedule."
-        invite3 = "answer any questions you may have about CCL or our local activities."
 
         if entry['Chapter'] == "TX Katy-South":
             inviteme =invite3

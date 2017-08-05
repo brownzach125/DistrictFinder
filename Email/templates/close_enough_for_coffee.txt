@@ -4,11 +4,11 @@ Subject: $subject
 
 Dear $to_name
 
-Thank you for your interest in Citizensâ€™ Climate Lobby! Iâ€™m always excited to meet new people passionate about making a difference and pursuing non-partisan climate change solutions!
+Thank you for your interest in Citizens’ Climate Lobby! I’m always excited to meet new people passionate about making a difference and pursuing non-partisan climate change solutions!
 
-Iâ€™m the Membership Coordinator for the Houston Metro Area. I will serve as your initial point of contact; I can answer any questions you may have about CCL, our ongoing work, or ways you can help.
+I’m the Membership Coordinator for the Houston Metro Area. I will serve as your initial point of contact; I can answer any questions you may have about CCL, our ongoing work, or ways you can help.
 
-I would truly appreciate the opportunity to $invite
+I would truly appreciate the opportunity to speak with you, either on the phone or in person, to talk more about CCL and your interests. Would you be available to talk over coffee or tea at $location on $day at %time? Please feel free to suggest a different location or time, I'm happy to accommodate your schedule.
 
 In the meantime, here are some links to help you get plugged into CCL or just answer some preliminary questions you have:
 
