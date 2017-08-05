@@ -35,7 +35,7 @@ def send_emails(entries):
     a = ["Monday", "Tuesday", "Wednesday", "Thursday"]
     daytime = list(itertools.product(a, b))
     for entry in entries:
-        if entry['Email Opt Out'] != "Yes":
+        if entry['Email Opt Out'] != "No":
             print "Some one doesn't want an email"
             continue
 
