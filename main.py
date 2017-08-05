@@ -3,15 +3,16 @@ import geocoder
 import os
 import sys
 import utils
+import itertools
 
 from Email.Email import send_email, create_message
 from Maps import PinExtractor
 from SunlightCongress import SunlightCongress
 
 
-sender_name = "Zach Brown"
-sender_email = "brownzach125@gmail.com"
-message_subject = "A very important message"
+sender_name = "Alex Summers"
+sender_email = "3rdcoastccl@gmail.com"
+message_subject = "Welcome to CCL!"
 
 def from_address_to_district(location):
     """Takes a location (street address, zip code, city) and returns the latitude, longitude, and district as a dict"""
@@ -29,8 +30,12 @@ def from_address_to_district(location):
 
 def send_emails(entries):
     possible_emails = []
+    count = 0
+    b = [6, 7, 8]
+    a = ["Monday", "Tuesday", "Wednesday", "Thursday"]
+    daytime = list(itertools.product(a, b))
     for entry in entries:
-        if entry['Email Opt Out'] != "No":
+        if entry['Email Opt Out'] != "Yes":
             print "Some one doesn't want an email"
             continue
 
@@ -38,20 +43,35 @@ def send_emails(entries):
         last_name = entry['Last Name']
         email = entry['Email']
 
-        # TODO You should add logic here  to decide which template to use
-        # You can pass any key into the create_message function, as long as that key
-        # is an entry in the template.
+        exactdaytime = daytime[count%12]
+
+        count = count+1
+        location = "Coco's at Gray and Baldwin in Midtown"
+
+        invite1 = "speak with you, either on the phone or in person, to talk more about CCL and your interests.  Would you be available to talk over coffee or tea, at " + location + " on " + exactdaytime[1] + " at " + exactdaytime[2] + "? Please feel free to suggest a different location or time, I’m always interested in trying new local places and I’m happy to accommodate your schedule.  Let me know what would be convenient for you."
+        invite2 = "to speak with you to talk more about CCL and your interests. Would you be available to talk T Monday at 7? Please feel free to suggest a different time; I'm happy to accommodate your schedule."
+        invite3 = "answer any questions you may have about CCL or our local activities."
+
+        if entry['Chapter'] == "TX Katy-South":
+            inviteme =invite3
+        elif entry['Chapter'] == "TX Houston-Montrose-Rice University" or "TX Houston-Heights" or "TX Houston-West University":
+            inviteme = invite1
+        else:
+            inviteme = invite2
+
         message = create_message(template_folder=os.path.join("Email", "templates", "generic.txt"),
                                  sender_email=sender_email,
                                  sender_name=sender_name,
                                  to_name=first_name + " " + last_name,
                                  to_email=email,
-                                 subject=message_subject)
+                                 subject=message_subject,
+                                 invite = inviteme)
 
         possible_emails.append({
-            'sender_email': sender_email,
+            'to_name': first_name, # TODO change to to_email
             'email': email,
-            'message': message
+            'message': message,
+            'chapter': entry['Chapter']
         })
 
     for email in possible_emails:
