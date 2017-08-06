@@ -51,7 +51,7 @@ def send_emails(entries):
 
         if 'Chapter' not in entry:
                 continue
-        if entry['Chapter'] == "TX Katy-South":
+        if entry['Assigned Chapter'] == "TX Katy-South":
             message = create_message(template_folder=os.path.join("Email", "templates", "questions_only.txt"),
                                      sender_email=sender_email,
                                      sender_name=sender_name,
@@ -60,7 +60,7 @@ def send_emails(entries):
                                      subject=message_subject,
                                      salutation = first_name,
                                      GL_email = GL_contact)
-        elif entry['Chapter'] in ["TX Houston-Montrose-Rice University", "TX Houston-Heights", "TX Houston-West University"]:
+        elif entry['Assigned Chapter'] in ["TX Houston-Montrose-Rice University", "TX Houston-Heights", "TX Houston-West University"]:
             message = create_message(template_folder=os.path.join("Email", "templates", "close_enough_for_coffee.txt"),
                                      sender_email=sender_email,
                                      sender_name=sender_name,
@@ -89,7 +89,8 @@ def send_emails(entries):
             'to_name': first_name,
             'email': email,
             'message': message,
-            'chapter': entry['Chapter']
+            'chapter': entry['Chapter'],
+            'GL_contact': GL_contact
         })
 
     for email in possible_emails:
@@ -102,7 +103,7 @@ def send_emails(entries):
         while(value != "Y" and value != "N"):
             value = raw_input("Enter Y/N:")
         if value == "Y":
-            #send_email(sender_email, email, GL_contact, message)
+            send_email(sender_email, email['email'], email['GL_contact'], email['message'])
             print "Email sent!"
 
         print "----------------------------------"
