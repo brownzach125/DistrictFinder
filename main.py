@@ -31,18 +31,21 @@ def from_address_to_district(location):
 def send_emails(entries):
     possible_emails = []
     count = 0
-    b = [6, 7, 8]
+    b = [7, 8, 9]
     a = ["Monday", "Tuesday", "Wednesday", "Thursday"]
     daytime = list(itertools.product(a, b))
     for entry in entries:
         if entry['Email Opt Out'] != "No":
             print "Some one doesn't want an email"
             continue
+        if entry['Contacted'] == "Yes":
+            continue
 
         first_name = entry['First Name']
         last_name = entry['Last Name']
         email = entry['Email']
         GL_contact = entry['GL email']
+        GL_name = entry['GL name']
 
         exactdaytime = daytime[count%12]
 
@@ -59,7 +62,8 @@ def send_emails(entries):
                                      to_email=email,
                                      subject=message_subject,
                                      salutation = first_name,
-                                     GL_email = GL_contact)
+                                     GL_email = GL_contact,
+                                     GL_name = GL_name)
         elif entry['Assigned Chapter'] in ["TX Houston-Montrose-Rice University", "TX Houston-Heights", "TX Houston-West University"]:
             message = create_message(template_folder=os.path.join("Email", "templates", "close_enough_for_coffee.txt"),
                                      sender_email=sender_email,
@@ -71,7 +75,8 @@ def send_emails(entries):
                                      day=exactdaytime[0],
                                      time=exactdaytime[1],
                                      salutation = first_name,
-                                     GL_email=GL_contact)
+                                     GL_email=GL_contact,
+                                     GL_name=GL_name)
         else:
              message = create_message(template_folder=os.path.join("Email", "templates", "phone_call.txt"),
                                      sender_email=sender_email,
@@ -82,15 +87,16 @@ def send_emails(entries):
                                      day=exactdaytime[0],
                                      time=exactdaytime[1],
                                      salutation = first_name,
-                                     GL_email=GL_contact)
-
+                                     GL_email=GL_contact,
+                                     GL_name=GL_name)
 
         possible_emails.append({
             'to_name': first_name,
             'email': email,
             'message': message,
             'chapter': entry['Chapter'],
-            'GL_contact': GL_contact
+            'GL_contact': GL_contact,
+            'GL_name': GL_name
         })
 
     for email in possible_emails:

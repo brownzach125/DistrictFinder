@@ -7,7 +7,7 @@ Dear $salutation,
 
 Thank you for your interest in Citizens' Climate Lobby! I'm always excited to meet new people passionate about making a difference and pursuing non-partisan climate change solutions!
 
-I'm the Membership Coordinator for the Houston Metro Area. I will serve as your initial point of contact; I can answer any questions you may have about CCL, our ongoing work, or ways you can help.
+I'm the Membership Coordinator for the Houston Metro Area. I will serve as your initial point of contact; I can answer any questions you may have about CCL, our ongoing work, or ways you can help. Your CCL group leader is $GL_name. If you have any questions about matters specific to your chapter you can contact them $GL_contact.
 
 I would truly appreciate the opportunity to speak with you, either on the phone or in person, to talk more about CCL and your interests. Would you be available to talk over coffee or tea at $location on $day at $time pm? Please feel free to suggest a different location or time, I'm happy to accommodate your schedule.
 
